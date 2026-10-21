@@ -1,0 +1,20 @@
+name: wax-nft-wash-trading-pattern-flag
+trust_label: educational-reference
+version: 0.1.0
+purpose: >
+  Flag two trades that reverse the parties of one asset inside a window.
+invariants:
+  - src/wash.ts performs no network or wallet calls.
+  - Requests in src/usecases.ts set executed to false.
+  - No use case contains a transaction.
+do_not:
+  - Do not add a live client and keep this trust label.
+entrypoints:
+  logic: src/wash.ts
+  tests: src/wash.test.ts
+  demo: src/Demo.tsx
+commands:
+  test: npm test
+live_data:
+  status: untested
+  notes: No endpoint was called.
