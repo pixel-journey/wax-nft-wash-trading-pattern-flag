@@ -1,7 +1,7 @@
 # A reversed pair inside a window
 
 **Trust label:** `educational-reference`  
-**Catalog:** [wax-ecosystem-blueprint-catalog](https://github.com/pixel-journey/wax-ecosystem-blueprint-catalog)
+**Catalog:** `wax-ecosystem-blueprint-catalog` (private index; not this public course)
 
 Same asset, parties swapped, 40 seconds apart. Flagged at 60 seconds, not at 30. Not a market scan.
 
