@@ -9,7 +9,7 @@
 | --- | --- |
 | Beginner | Flag alice→bob then bob→alice on asset `1`, 40 seconds apart, inside a 60 second window |
 | Intermediate | See why 30 seconds, the same direction, and the same timestamp do not flag |
-| Masterclass | Say why this is not wash-trading detection |
+| Masterclass | Say why this is not wash-trading detection and how it differs from the clock and volume labs |
 
 ---
 
@@ -54,18 +54,31 @@ AtomicMarket v2 listings are one asset. That does not make a two-trade reverse "
 | --- | --- | --- | --- |
 | Return just outside the window | Flag anyway | 40 s vs 30 s window is false | `flags a return inside the window only` |
 | Same direction twice | Call it a wash | not reversed | same test, `{ ...a, at: 110 }` |
-| Same timestamp | Zero-second wash | `at` must differ | code path `left.at !== right.at` (not a separate assert) |
+| Same timestamp | Zero-second wash | `at` must differ | code path `left.at !== right.at` |
 
 ---
 
-## Masterclass — do not ban from this flag
+## Masterclass — triad distinction
+
+| Lab | What it looks at |
+| --- | --- |
+| **This (pattern flag)** | Exactly two trades, reverse parties, window |
+| [wash deduplicator](https://github.com/pixel-journey/wax-wash-trading-deduplicator) | Multi-sale list, **3600s** kinds |
+| [volume deduplicator](https://github.com/pixel-journey/wax-wash-trading-volume-deduplicator) | Amounts only, `2 * min(fwd, back)`, **no clock** |
+| [velocity scatter](https://github.com/pixel-journey/wax-collection-velocity-scatter-plot) | holdDays + velocityPer30d arguments |
 
 A reversed pair can be a genuine buyback. The flag is a teaching predicate. It is not evidence for freezing an account.
 
 If you later scan history, keep the predicate pure and pass rows in. Do not hide a fetch inside `roundTrip`.
 
+### Exercises
+
+1. Window 60, gap 40 — flagged? (**Yes**.)  
+2. Equal `at` — flagged? (**No**.)  
+3. Is this a ban authority? (**No**.)
+
 ### What this course will not teach
 
 - A marketplace wash score
 - Prices, royalties, or collection fees
-- A broadcast
+- A broadcast or live AtomicMarket scan
